@@ -24,7 +24,7 @@ import {
 import useFetchData from "@/hooks/useFetchData";
 import DebounceSearchInput from "./DebounceSearchInput";
 import { UserData } from "@/types";
-import { SortAltIcon } from "@/utils/IconMaker";
+import { SearchIcon, SortAltIcon } from "@/utils/IconMaker";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -163,8 +163,8 @@ export default function DataTable() {
         </div>
       </div>
       <div className="h-2" />
-      <table className="w-full text-center gap">
-        <thead>
+      <table className="w-full text-center">
+        <thead className="">
           {table.getHeaderGroups().map((headerGroup, i) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
@@ -180,10 +180,13 @@ export default function DataTable() {
                             onClick: header.column.getToggleSortingHandler(),
                           }}
                         >
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          <div className="flex justify-center items-center ">
+                            {flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                            <SortAltIcon />
+                          </div>
                         </div>
                       </>
                     )}
