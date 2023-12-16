@@ -24,7 +24,12 @@ import {
 import useFetchData from "@/hooks/useFetchData";
 import DebounceSearchInput from "./DebounceSearchInput";
 import { UserData } from "@/types";
-import { SearchIcon, SortAltIcon } from "@/utils/IconMaker";
+import {
+  EditIcon,
+  SearchIcon,
+  SortAltIcon,
+  TrashIcon,
+} from "@/utils/IconMaker";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -77,21 +82,31 @@ export default function DataTable() {
         cell: (info) => info.getValue(),
       },
       {
-        header: "code",
+        header: "Code",
         footer: (props) => props.column.id,
         accessorKey: "code",
         cell: (info) => info.getValue(),
       },
       {
-        header: "company",
+        header: "Company",
         footer: (props) => props.column.id,
         accessorKey: "company",
         cell: (info) => info.getValue(),
       },
       {
-        header: "status",
+        header: "Status",
         footer: (props) => props.column.id,
         accessorKey: "status",
+      },
+      {
+        header: "Action",
+        footer: (props) => props.column.id,
+        cell: (info) => (
+          <div className="flex cursor-pointer gap-4">
+            <TrashIcon />
+            <EditIcon />
+          </div>
+        ),
       },
       // not sure what to do with this!
       // {
@@ -213,11 +228,11 @@ export default function DataTable() {
                       {columnName === "status" ? (
                         <>
                           {status ? (
-                            <span className="w-[83px] h-[31px] px-2 py-3 gap-3 bg-deliveredBtn text-deliveredBtnText rounded-full">
+                            <span className="w-[83px] h-[31px] px-2 py-3 gap-3 bg-deliveredBtn text-deliveredBtnText rounded-3xl">
                               delivered
                             </span>
                           ) : (
-                            <span className="w-[83px] h-[31px] px-2 py-3 gap-3 bg-cancelledBtn text-cancelledBtnText rounded-full">
+                            <span className="w-[83px] h-[31px] px-2 py-3 gap-3 bg-cancelledBtn text-cancelledBtnText rounded-3xl">
                               cancelled
                             </span>
                           )}
@@ -236,9 +251,9 @@ export default function DataTable() {
           })}
         </tbody>
       </table>
-      <div className="h-2" />
-      <div className="flex min-h-screen flex-col items-center justify-between p-4 ">
-        <div className="flex items-center gap-3">
+
+      <div className="flex min-h-screen flex-col items-center justify-between ">
+        <div className="flex items-center gap-3 mt-4">
           <button
             className=" rounded p-1"
             onClick={() => table.previousPage()}
