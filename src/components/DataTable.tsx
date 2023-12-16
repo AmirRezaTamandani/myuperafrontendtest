@@ -23,13 +23,13 @@ import {
 
 import useFetchData from "@/hooks/useFetchData";
 import DebounceSearchInput from "./DebounceSearchInput";
-import { UserData } from "@/types";
 import {
   EditIcon,
   SearchIcon,
   SortAltIcon,
   TrashIcon,
 } from "@/utils/IconMaker";
+import { UserData } from "@/types/Index";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -56,9 +56,6 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 export default function DataTable() {
   const { data: fetchedData, isLoading, isError } = useFetchData();
 
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
   const [globalFilter, setGlobalFilter] = React.useState("");
 
   const columns = React.useMemo<ColumnDef<UserData, any>[]>(
@@ -133,10 +130,9 @@ export default function DataTable() {
       fuzzy: fuzzyFilter,
     },
     state: {
-      columnFilters,
       globalFilter,
     },
-    onColumnFiltersChange: setColumnFilters,
+
     onGlobalFilterChange: setGlobalFilter,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),

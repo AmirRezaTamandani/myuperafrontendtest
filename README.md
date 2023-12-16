@@ -1,36 +1,22 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+thank you for your kind observations in advance!
+I tried to diversify my code into branches, so it could be developed properly
+I didnt add pages folder as this table is but a component and I didn't had any page so i just put it in the main page (it's not a good thing!)
 
-## Getting Started
+if you need to add or change custom colors , you can visit 'tailwind.config.ts'
+the design and data weren't really connected so I did a little improvisation and I tried to keep the project as pixel perfect as possible!
+they are some pixeled values in the code because the design had them and they weren't compatible with default rem system of the tailwind (i am sure it wouldn't be a problem, right , right :) !)
 
-First, run the development server:
+for making changes to table you can go to "DataTable.tsx" and add or remove columns.
+if you need more in depth changes, I tried to be as clear as possible, that's why you might see long names,long understandable name is 1000 time better than a forgettable shorthand!
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+for making change to request , you can visit hooks folder and add or edit the req, I tried to write it as ordinary as possible so it could be improved later on!
+the GET method is put in useFetchData, it uses axios and react query, nothing special there!
+the hook posses loading and error function, yet it wasn't in design and so i avoided more improvisation
+the types are in type folder and you can easily add more if needed
+query context has wrapped around the layout you can do more things in there and the main reason for this was to keep SSR intact !(you can avoid wrapping and just write it in layout yet it will make whole project CSR and that is bad as they say! )
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+there is a Debounce search input to search throughout ALL of the table, and the sorting is inside the DataTable itself, and I used Built in sorter in tanstack table!
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+everything is straight forward, if there is a problem I'll be happy to adjust them!

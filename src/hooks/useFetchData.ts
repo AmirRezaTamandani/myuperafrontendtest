@@ -1,7 +1,6 @@
 import { useQuery } from "react-query";
 import axios from "axios";
-import { UserData } from "@/types";
-
+import { UserData } from "@/types/Index";
 
 const useFetchData = () => {
   return useQuery<UserData[]>("userData", async () => {
