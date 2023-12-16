@@ -1,3 +1,4 @@
+import { SearchIcon } from "@/utils/IconMaker";
 import React from "react";
 
 const DebounceSearchInput = ({
@@ -25,11 +26,17 @@ const DebounceSearchInput = ({
   }, [value]);
 
   return (
-    <input
-      {...props}
-      value={value}
-      onChange={(e) => setValue(e.target.value)}
-    />
+    <div className="relative ">
+      <div className="absolute top-1/2 left-2 transform -translate-y-1/2">
+        <SearchIcon />
+      </div>
+      <input
+        {...props}
+        value={value}
+        className="border rounded-lg  bg-customBg pl-8 py-2"
+        onChange={(e) => setValue(e.target.value)}
+      />
+    </div>
   );
 };
 

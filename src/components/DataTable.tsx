@@ -158,7 +158,6 @@ export default function DataTable() {
           <DebounceSearchInput
             value={globalFilter ?? ""}
             onChange={(value) => setGlobalFilter(String(value))}
-            className="border rounded-lg gap-8 bg-customBg "
             placeholder="Search..."
           />
         </div>
