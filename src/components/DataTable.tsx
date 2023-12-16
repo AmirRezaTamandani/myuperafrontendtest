@@ -1,8 +1,7 @@
 "use client";
+import { BiSortAlt2 } from "react-icons/bi";
 import React from "react";
 import {
-  Column,
-  Table,
   useReactTable,
   ColumnFiltersState,
   getCoreRowModel,
@@ -11,22 +10,21 @@ import {
   getFacetedUniqueValues,
   getFacetedMinMaxValues,
   getPaginationRowModel,
-  sortingFns,
   getSortedRowModel,
   FilterFn,
-  SortingFn,
   ColumnDef,
   flexRender,
-  FilterFns,
 } from "@tanstack/react-table";
 import {
   RankingInfo,
   rankItem,
   compareItems,
 } from "@tanstack/match-sorter-utils";
-import { UserData } from "@/types";
+
 import useFetchData from "@/hooks/useFetchData";
 import DebounceSearchInput from "./DebounceSearchInput";
+import { UserData } from "@/types";
+import { SortAltIcon } from "@/utils/IconMaker";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -95,12 +93,13 @@ export default function DataTable() {
         footer: (props) => props.column.id,
         accessorKey: "status",
       },
-      {
-        header: "access",
-        footer: (props) => props.column.id,
-        accessorKey: "access",
-        cell: (info) => info.getValue(),
-      },
+      // not sure what to do with this!
+      // {
+      //   header: "access",
+      //   footer: (props) => props.column.id,
+      //   accessorKey: "access",
+      //   cell: (info) => info.getValue(),
+      // },
     ],
     []
   );
@@ -124,7 +123,6 @@ export default function DataTable() {
     },
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
-    globalFilterFn: fuzzyFilter,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -132,18 +130,7 @@ export default function DataTable() {
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getFacetedMinMaxValues: getFacetedMinMaxValues(),
-    debugTable: true,
-    debugHeaders: true,
-    debugColumns: false,
   });
-
-  React.useEffect(() => {
-    if (table.getState().columnFilters[0]?.id === "fullName") {
-      if (table.getState().sorting[0]?.id !== "fullName") {
-        table.setSorting([{ id: "fullName", desc: false }]);
-      }
-    }
-  }, [table.getState().columnFilters[0]?.id]);
 
   return (
     <div className="p-4">
@@ -177,7 +164,7 @@ export default function DataTable() {
         </div>
       </div>
       <div className="h-2" />
-      <table>
+      <table className="w-full text-center gap">
         <thead>
           {table.getHeaderGroups().map((headerGroup, i) => (
             <tr key={headerGroup.id}>
@@ -189,7 +176,7 @@ export default function DataTable() {
                         <div
                           {...{
                             className: header.column.getCanSort()
-                              ? "cursor-pointer select-none flex flex-col  gap-3 p-"
+                              ? "cursor-pointer select-none "
                               : "",
                             onClick: header.column.getToggleSortingHandler(),
                           }}
@@ -198,10 +185,6 @@ export default function DataTable() {
                             header.column.columnDef.header,
                             header.getContext()
                           )}
-                          {{
-                            asc: " 🔼",
-                            desc: " 🔽",
-                          }[header.column.getIsSorted() as string] ?? null}
                         </div>
                       </>
                     )}
@@ -213,19 +196,35 @@ export default function DataTable() {
         </thead>
         <tbody>
           {table.getRowModel().rows.map((row, i) => {
+            const status = row.original.status;
             return (
               <tr
                 key={row.id}
                 className={`${
                   i % 2 === 0 ? "bg-customBg" : "bg-customBgAssent"
-                }`}
+                } w-[1110px] h-[64px] p-4 gap-4`}
               >
                 {row.getVisibleCells().map((cell) => {
+                  const columnName = cell.column.id;
                   return (
-                    <td key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
+                    <td key={cell.id} className="p-4">
+                      {columnName === "status" ? (
+                        <>
+                          {status ? (
+                            <span className="w-[83px] h-[31px] px-2 py-3 gap-3 bg-deliveredBtn text-deliveredBtnText rounded-full">
+                              delivered
+                            </span>
+                          ) : (
+                            <span className="w-[83px] h-[31px] px-2 py-3 gap-3 bg-cancelledBtn text-cancelledBtnText rounded-full">
+                              cancelled
+                            </span>
+                          )}
+                        </>
+                      ) : (
+                        flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )
                       )}
                     </td>
                   );

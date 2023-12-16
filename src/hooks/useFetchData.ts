@@ -2,6 +2,7 @@ import { useQuery } from "react-query";
 import axios from "axios";
 import { UserData } from "@/types";
 
+
 const useFetchData = () => {
   return useQuery<UserData[]>("userData", async () => {
     const response = await axios.get<UserData[]>(
